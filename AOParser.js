@@ -2,13 +2,11 @@ const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
 
-// Get the name argument from the command line
 const args = process.argv.slice(2);
 let outputFileName = 'new';
 let customName = 'New File';
 let extractCsvFilePath = null;
 
-// Function to display help instructions
 const displayHelp = () => {
   console.log(`
  ▄▄▄       ▒█████   ██▓███   ▄▄▄       ██▀███    ██████ ▓█████  ██▀███  
@@ -37,7 +35,6 @@ if (args.length === 0) {
   process.exit(0);
 }
 
-// Parse arguments
 args.forEach((arg, index) => {
   if (arg === '-h') {
     displayHelp();
@@ -46,8 +43,7 @@ args.forEach((arg, index) => {
   if (arg === '--name' && args[index + 1]) {
     customName = args[index + 1];
     outputFileName = customName.replace(/\s+/g, '_');
-  }
-  if (arg === '--extractcsv' && args[index + 1]) {
+  } else if (arg === '--extractcsv' && args[index + 1]) {
     extractCsvFilePath = args[index + 1];
   }
 });
@@ -58,7 +54,7 @@ const outputXmlDir = path.join('./output', 'xml');
 const outputCsvDir = path.join('./output', 'csv');
 const outputFile = path.join(outputXmlDir, `${outputFileName}.xml`);
 
-// Utility to generate unique LumiverseId
+// Generate a new unique, sequential LumiverseId for each lumiverse
 let lumiverseIdCounter = 1;
 const generateLumiverseId = () => lumiverseIdCounter++;
 
@@ -92,13 +88,13 @@ const extractDmxScreens = async (filePath, existingScreenNames) => {
   }
 };
 
-// Function to gather all DmxScreen elements from multiple files, ignoring duplicates by name
+// Gather all DmxScreen elements from multiple files, ignoring duplicates by name
 const gatherDmxScreens = async () => {
   const files = fs.readdirSync(inputDir).filter(file => file.endsWith('.xml'));
 
   if (files.length === 0) {
     console.error('Error: No XML files found in the AOFiles directory.');
-    process.exit(1); // Exit the script if no files are found
+    process.exit(1);
   }
 
   let allScreens = [];
@@ -111,7 +107,6 @@ const gatherDmxScreens = async () => {
 };
 
 const generateNewXml = async (dmxScreens) => {
-  // Check if output file already exists
   if (fs.existsSync(outputFile)) {
     console.error(`Error: Output file "${outputFile}" already exists. Please choose a different name.`);
     process.exit(1);
@@ -145,7 +140,7 @@ const generateNewXml = async (dmxScreens) => {
   }
 };
 
-// Function to extract pixel data and save as CSV
+// Extract pixel data and save as CSV
 const extractPixelsToCsv = async (filePath) => {
   try {
     const xmlData = fs.readFileSync(filePath, 'utf-8');
