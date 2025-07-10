@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const xml2js = require('xml2js');
+const readlineSync = require('readline-sync');
 
 const args = process.argv.slice(2);
 let outputFileName = 'new';
@@ -74,7 +75,11 @@ const extractDmxScreens = async (filePath, existingScreenNames) => {
           const screenName = screen.$.name;
           if (!existingScreenNames.has(screenName)) {
             screen.$.LumiverseId = generateLumiverseId().toString();
-            dmxScreens.push(screen);
+            dmxScreens.push({
+              screen: screen,
+              name: screenName,
+              sourceFile: path.basename(filePath)
+            });
             // Track the screen name to avoid duplicates
             existingScreenNames.add(screenName);
           }
@@ -106,10 +111,80 @@ const gatherDmxScreens = async () => {
   return allScreens;
 };
 
+// Interactive CLI function to select fixtures
+const selectFixtures = (allScreens) => {
+  console.log('\n=== LED Fixture Selection ===');
+  console.log(`Found ${allScreens.length} unique fixtures:\n`);
+  
+  // Display all available fixtures with numbers
+  allScreens.forEach((screenData, index) => {
+    console.log(`${index + 1}. ${screenData.name} (from ${screenData.sourceFile})`);
+  });
+  
+  console.log('\nSelection options:');
+  console.log('- Enter numbers separated by commas (e.g., 1,3,5)');
+  console.log('- Enter ranges with dashes (e.g., 1-4,7,9-11)');
+  console.log('- Enter "all" to select all fixtures');
+  console.log('- Enter "none" to select no fixtures');
+  
+  const input = readlineSync.question('\nSelect fixtures: ').trim();
+  
+  if (input.toLowerCase() === 'all') {
+    return allScreens.map(screenData => screenData.screen);
+  }
+  
+  if (input.toLowerCase() === 'none') {
+    return [];
+  }
+  
+  // Parse selection input
+  const selectedIndices = new Set();
+  const parts = input.split(',').map(part => part.trim());
+  
+  for (const part of parts) {
+    if (part.includes('-')) {
+      // Handle ranges like "1-4"
+      const [start, end] = part.split('-').map(num => parseInt(num.trim()) - 1);
+      if (!isNaN(start) && !isNaN(end) && start >= 0 && end < allScreens.length && start <= end) {
+        for (let i = start; i <= end; i++) {
+          selectedIndices.add(i);
+        }
+      } else {
+        console.log(`Invalid range: ${part}`);
+      }
+    } else {
+      // Handle single numbers
+      const index = parseInt(part) - 1;
+      if (!isNaN(index) && index >= 0 && index < allScreens.length) {
+        selectedIndices.add(index);
+      } else {
+        console.log(`Invalid selection: ${part}`);
+      }
+    }
+  }
+  
+  const selectedScreens = Array.from(selectedIndices).map(index => allScreens[index].screen);
+  
+  console.log(`\nSelected ${selectedScreens.length} fixtures for output.`);
+  if (selectedScreens.length > 0) {
+    console.log('Selected fixtures:');
+    Array.from(selectedIndices).forEach(index => {
+      console.log(`- ${allScreens[index].name}`);
+    });
+  }
+  
+  return selectedScreens;
+};
+
 const generateNewXml = async (dmxScreens) => {
   if (fs.existsSync(outputFile)) {
     console.error(`Error: Output file "${outputFile}" already exists. Please choose a different name.`);
     process.exit(1);
+  }
+
+  if (dmxScreens.length === 0) {
+    console.log('No fixtures selected. Skipping XML generation.');
+    return;
   }
 
   try {
@@ -133,7 +208,7 @@ const generateNewXml = async (dmxScreens) => {
       });
     }
     fs.writeFileSync(outputFile, newXmlContent, 'utf-8');
-    console.log(`New XML generated at: ${outputFile}`);
+    console.log(`\nNew XML generated at: ${outputFile}`);
   } catch (error) {
     console.error('Error reading the template file or writing the output file.', error);
     process.exit(1);
@@ -199,8 +274,9 @@ const runAOParser = async () => {
   if (extractCsvFilePath) {
     await extractPixelsToCsv(extractCsvFilePath);
   } else {
-    const dmxScreens = await gatherDmxScreens();
-    await generateNewXml(dmxScreens);
+    const allScreens = await gatherDmxScreens();
+    const selectedScreens = selectFixtures(allScreens);
+    await generateNewXml(selectedScreens);
   }
 };
 
