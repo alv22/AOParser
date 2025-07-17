@@ -59,6 +59,128 @@ const outputFile = path.join(outputXmlDir, `${outputFileName}.xml`);
 let lumiverseIdCounter = 1;
 const generateLumiverseId = () => lumiverseIdCounter++;
 
+// Calculate total DMX channels used by a lumiverse
+const calculateLumiverseChannels = (dmxScreen) => {
+  let highestChannel = 0;
+  
+  if (dmxScreen.layers && dmxScreen.layers[0].DmxSlice) {
+    dmxScreen.layers[0].DmxSlice.forEach(slice => {
+      if (slice.Params) {
+        slice.Params.forEach(params => {
+          if (params.$ && params.$.name === 'Input' && params.ParamRange) {
+            params.ParamRange.forEach(param => {
+              if (param.$ && param.$.name === 'Start Channel' && param.$.value) {
+                const startChannel = parseInt(param.$.value);
+                if (startChannel > highestChannel) {
+                  highestChannel = startChannel;
+                }
+              }
+            });
+          }
+        });
+      }
+    });
+  }
+  
+  // Each pixel uses 3 channels (RGB), so total = highest start channel + 2
+  return highestChannel > 0 ? highestChannel + 2 : 0;
+};
+
+// Update all pixel channels in a lumiverse based on new starting channel
+const updatePixelChannels = (dmxScreen, newStartChannel) => {
+  let currentChannel = newStartChannel;
+  
+  if (dmxScreen.layers && dmxScreen.layers[0].DmxSlice) {
+    dmxScreen.layers[0].DmxSlice.forEach(slice => {
+      if (slice.Params) {
+        slice.Params.forEach(params => {
+          if (params.$ && params.$.name === 'Input' && params.ParamRange) {
+            params.ParamRange.forEach(param => {
+              if (param.$ && param.$.name === 'Start Channel') {
+                param.$.value = currentChannel.toString();
+              }
+            });
+          }
+        });
+      }
+      currentChannel += 3; // Move to next pixel (3 channels per pixel)
+    });
+  }
+  
+  return currentChannel - 1; // Return the last channel used
+};
+
+
+// Interactive channel reassignment for selected screens
+const reassignChannels = (selectedScreens) => {
+  console.log('\n=== DMX Channel Assignment ===');
+  console.log('Enter starting DMX channel for each lumiverse (or press Enter to accept default):\n');
+  
+  let suggestedStart = 1;
+  
+  selectedScreens.forEach((screen, index) => {
+    const pixelCount = screen.layers && screen.layers[0].DmxSlice ? screen.layers[0].DmxSlice.length : 0;
+    const totalChannels = pixelCount * 3; // 3 channels per pixel
+    const currentStartChannel = getFirstPixelStartChannel(screen);
+    
+    console.log(`${index + 1}. ${screen.$.name}`);
+    console.log(`   Pixels: ${pixelCount} (${totalChannels} channels total)`);
+    console.log(`   Current starting channel: ${currentStartChannel}`);
+    
+    let validInput = false;
+    let newStart;
+    
+    while (!validInput) {
+      const input = readlineSync.question(`   New starting channel [${suggestedStart}]: `).trim();
+      
+      if (input === '') {
+        // User pressed Enter, use suggested value
+        newStart = suggestedStart;
+        validInput = true;
+      } else {
+        newStart = parseInt(input);
+        if (!isNaN(newStart) && newStart > 0 && newStart <= 131072) {
+          validInput = true;
+        } else {
+          console.log('   Invalid input. Please enter a number between 1 and 131072.');
+        }
+      }
+    }
+    
+    // Update all pixel channels in this lumiverse
+    updatePixelChannels(screen, newStart);
+    console.log(`   ✓ Updated to channels ${newStart}-${newStart + totalChannels - 1}\n`);
+    
+    // Calculate next suggested start for the next lumiverse
+    suggestedStart = newStart + totalChannels;
+  });
+  
+  console.log('Channel assignment complete.\n');
+  return selectedScreens;
+};
+
+// Helper function to get the first pixel's start channel
+const getFirstPixelStartChannel = (dmxScreen) => {
+  let firstChannel = 0;
+  
+  if (dmxScreen.layers && dmxScreen.layers[0].DmxSlice && dmxScreen.layers[0].DmxSlice.length > 0) {
+    const firstSlice = dmxScreen.layers[0].DmxSlice[0];
+    if (firstSlice.Params) {
+      firstSlice.Params.forEach(params => {
+        if (params.$ && params.$.name === 'Input' && params.ParamRange) {
+          params.ParamRange.forEach(param => {
+            if (param.$ && param.$.name === 'Start Channel' && param.$.value) {
+              firstChannel = parseInt(param.$.value);
+            }
+          });
+        }
+      });
+    }
+  }
+  
+  return firstChannel;
+};
+
 // Function to extract DmxScreen elements and check for duplicates
 const extractDmxScreens = async (filePath, existingScreenNames) => {
   try {
@@ -275,7 +397,13 @@ const runAOParser = async () => {
     await extractPixelsToCsv(extractCsvFilePath);
   } else {
     const allScreens = await gatherDmxScreens();
-    const selectedScreens = selectFixtures(allScreens);
+    let selectedScreens = selectFixtures(allScreens);
+    
+    // Always reassign channels if fixtures were selected
+    if (selectedScreens.length > 0) {
+      selectedScreens = reassignChannels(selectedScreens);
+    }
+    
     await generateNewXml(selectedScreens);
   }
 };
