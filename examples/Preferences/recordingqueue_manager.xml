@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RecordingQueueManager name="RecordingQueueManager" subject_type="Composition">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="22" microVersion="9" revision="47596"/>
+	<Params name="Params">
+		<ParamRange name="Duration Seconds" T="DOUBLE" default="5" value="5">
+			<PhaseSourceStatic name="PhaseSourceStatic"/>
+		</ParamRange>
+		<ParamRange name="Duration Beats" T="DOUBLE" default="4" value="4">
+			<PhaseSourceStatic name="PhaseSourceStatic"/>
+		</ParamRange>
+		<ParamRange name="Arm Seconds" T="DOUBLE" default="3" value="3">
+			<PhaseSourceStatic name="PhaseSourceStatic"/>
+		</ParamRange>
+	</Params>
+</RecordingQueueManager>
+

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Preset name="Up N Down" uniqueId="MOD_ENVELOPE" className="Envelope" default="0">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="11" microVersion="3" revision="13855"/>
+	<ModifierEnvelope name="ModifierEnvelope" altName="Envelope" uniqueId="1653309321997">
+		<points>
+			<point x="0" y="0" curve="33"/>
+			<point x="0.5" y="1" curve="1"/>
+			<point x="1" y="0" curve="1"/>
+		</points>
+	</ModifierEnvelope>
+</Preset>
+

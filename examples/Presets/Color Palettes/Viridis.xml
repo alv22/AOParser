@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Preset name="Viridis" uniqueId="PARAM_SPACE_COLOR_PALETTE" className="ColorPalette"
+        default="0">
+  <versionInfo name="Resolume Arena" majorVersion="7" minorVersion="3" microVersion="0"
+               revision="70000"/>
+  <ColorPalette name="ColorPalette">
+    <Params name="Params">
+      <ParamChoice name="Colors" T="COLOR" default="4278190335" value="4284481873"
+                   storeChoices="1">
+        <Choice name="0x51160ff 2" value="4284481873" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x521a77ff 2" value="4285995602" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x513788ff 2" value="4287117137" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x4b4d92ff 2" value="4287778123" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x436298ff 2" value="4288176707" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x387399ff 2" value="4288246584" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x2d8399ff 2" value="4288250669" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x249397ff 2" value="4288123684" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x22a294ff 2" value="4287930914" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x2ab18fff 2" value="4287607082" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x3cbf84ff 2" value="4286889788" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x5bcc72ff 2" value="4285713499" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x82d758ff 2" value="4284012418" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xafe03aff 2" value="4282048687" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xdae621ff 2" value="4280411866" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xfcea24ff 2" value="4280609532" enabled="1" active="1"
+                shortName=""/>
+      </ParamChoice>
+    </Params>
+  </ColorPalette>
+</Preset>

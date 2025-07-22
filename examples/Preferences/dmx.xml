@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<DmxController automapEnabled="1" artNetName="Arena Heikki-MBP.granite" bindAdapter="en0" sendArtSync="1">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="22" microVersion="9" revision="47596"/>
+	<Inputs/>
+</DmxController>
+

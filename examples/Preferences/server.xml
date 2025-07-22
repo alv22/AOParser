@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ServerController name="ServerController" enabled="0" port="8080" address="0.0.0.0" root="/Users/alv22/Documents/Resolume Arena/Webserver">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="22" microVersion="9" revision="47596"/>
+</ServerController>
+

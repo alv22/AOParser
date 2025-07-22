@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Preset name="Dot Dot Dot" uniqueId="c_35de2952-eebe-4238-ac4a-2e9864da6621" className="WireGenerator" default="0">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="3" microVersion="0" revision="71774"/>
+	<VideoSource storage="0" name="VideoSource" width="1920" height="1080" type="GeneratorVideoSource">
+		<RenderPass name="RenderPassChain" type="RenderPassChain" uniqueTypeId="RenderPassChain" uniqueId="1602244954561" baseType="RenderPassChain">
+			<Params name="Params">
+				<Param name="Bypassed" altName="Bypass" T="BOOL" default="0" value="0"/>
+			</Params>
+			<AnimationSettings name="AnimationSettings" uniqueId="1602244954562"/>
+		</RenderPass>
+		<RenderPass name="AbstractField" type="WireGenerator" uniqueTypeId="c_35de2952-eebe-4238-ac4a-2e9864da6621" uniqueId="1602244954559" baseType="Generator">
+			<Params name="Params">
+				<Param name="Bypassed" altName="Bypass" T="BOOL" default="0" value="0"/>
+				<ParamRange name="Octaves" T="DOUBLE" default="2" value="3">
+					<PhaseSourceStatic name="PhaseSourceStatic" phase="0.4000000000000000222"/>
+					<BehaviourDouble name="BehaviourDouble"/>
+					<ValueRange name="defaultRange" min="1" max="6"/>
+					<ValueRange name="minMax" min="1" max="6"/>
+					<ValueRange name="startStop" min="1" max="6"/>
+				</ParamRange>
+				<ParamRange name="Amplitude" T="DOUBLE" default="0.5" value="1">
+					<PhaseSourceStatic name="PhaseSourceStatic" phase="1"/>
+					<BehaviourDouble name="BehaviourDouble"/>
+					<ValueRange name="defaultRange" min="0" max="1"/>
+					<ValueRange name="minMax" min="0" max="1"/>
+					<ValueRange name="startStop" min="0" max="1"/>
+				</ParamRange>
+				<ParamRange name="Density" T="DOUBLE" default="0.5" value="1">
+					<PhaseSourceStatic name="PhaseSourceStatic" phase="1"/>
+					<BehaviourDouble name="BehaviourDouble"/>
+					<ValueRange name="defaultRange" min="0" max="1"/>
+					<ValueRange name="minMax" min="0" max="1"/>
+					<ValueRange name="startStop" min="0" max="1"/>
+				</ParamRange>
+			</Params>
+			<AnimationSettings name="AnimationSettings" uniqueId="1602244954560"/>
+			<View name="View"/>
+			<WireRenderPass name="WireRenderPass">
+				<SliceInputs/>
+			</WireRenderPass>
+		</RenderPass>
+	</VideoSource>
+</Preset>
+

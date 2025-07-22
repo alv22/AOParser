@@ -59,20 +59,67 @@ const outputFile = path.join(outputXmlDir, `${outputFileName}.xml`);
 let lumiverseIdCounter = 1;
 const generateLumiverseId = () => lumiverseIdCounter++;
 
+// Get fixture channel count based on width, height, and color format
+const getFixtureChannelCount = (slice) => {
+  let width = 1;
+  let height = 1;
+  let channelsPerPixel = 3; // Default for RGB/GRB
+  
+  if (slice.FixtureInstance && slice.FixtureInstance[0].Fixture) {
+    const fixture = slice.FixtureInstance[0].Fixture[0];
+    if (fixture.Params) {
+      fixture.Params.forEach(params => {
+        if (params.ParamFixturePixels) {
+          params.ParamFixturePixels.forEach(pixelParams => {
+            // Get width
+            if (pixelParams.ParamRange) {
+              pixelParams.ParamRange.forEach(param => {
+                if (param.$ && param.$.name === 'Width' && param.$.value) {
+                  width = parseInt(param.$.value);
+                } else if (param.$ && param.$.name === 'Height' && param.$.value) {
+                  height = parseInt(param.$.value);
+                }
+              });
+            }
+            // Get color format
+            if (pixelParams.ParamChoice) {
+              pixelParams.ParamChoice.forEach(param => {
+                if (param.$ && param.$.name === 'Color Format' && param.$.value) {
+                  const format = param.$.value.toLowerCase();
+                  if (format === 'rgbw') {
+                    channelsPerPixel = 4;
+                  } else if (format === 'rgb' || format === 'grb' || format === 'bgr') {
+                    channelsPerPixel = 3;
+                  }
+                }
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+  
+  return width * height * channelsPerPixel;
+};
+
 // Calculate total DMX channels used by a lumiverse
 const calculateLumiverseChannels = (dmxScreen) => {
   let highestChannel = 0;
+  let lastFixtureChannels = 0;
   
   if (dmxScreen.layers && dmxScreen.layers[0].DmxSlice) {
     dmxScreen.layers[0].DmxSlice.forEach(slice => {
+      let startChannel = 0;
       if (slice.Params) {
         slice.Params.forEach(params => {
           if (params.$ && params.$.name === 'Input' && params.ParamRange) {
             params.ParamRange.forEach(param => {
               if (param.$ && param.$.name === 'Start Channel' && param.$.value) {
-                const startChannel = parseInt(param.$.value);
+                startChannel = parseInt(param.$.value);
                 if (startChannel > highestChannel) {
                   highestChannel = startChannel;
+                  lastFixtureChannels = getFixtureChannelCount(slice);
                 }
               }
             });
@@ -82,8 +129,8 @@ const calculateLumiverseChannels = (dmxScreen) => {
     });
   }
   
-  // Each pixel uses 3 channels (RGB), so total = highest start channel + 2
-  return highestChannel > 0 ? highestChannel + 2 : 0;
+  // Total = highest start channel + channels for the last fixture - 1
+  return highestChannel > 0 ? highestChannel + lastFixtureChannels - 1 : 0;
 };
 
 // Update all pixel channels in a lumiverse based on new starting channel
@@ -103,7 +150,8 @@ const updatePixelChannels = (dmxScreen, newStartChannel) => {
           }
         });
       }
-      currentChannel += 3; // Move to next pixel (3 channels per pixel)
+      // Move to next fixture based on its actual channel count
+      currentChannel += getFixtureChannelCount(slice);
     });
   }
   
@@ -119,12 +167,54 @@ const reassignChannels = (selectedScreens) => {
   let suggestedStart = 1;
   
   selectedScreens.forEach((screen, index) => {
-    const pixelCount = screen.layers && screen.layers[0].DmxSlice ? screen.layers[0].DmxSlice.length : 0;
-    const totalChannels = pixelCount * 3; // 3 channels per pixel
+    // Calculate total channels by summing all fixture channel counts
+    let totalChannels = 0;
+    let fixtureDetails = [];
+    
+    if (screen.layers && screen.layers[0].DmxSlice) {
+      screen.layers[0].DmxSlice.forEach(slice => {
+        const channelCount = getFixtureChannelCount(slice);
+        totalChannels += channelCount;
+        
+        // Get fixture dimensions for display
+        let width = 1, height = 1;
+        if (slice.FixtureInstance && slice.FixtureInstance[0].Fixture) {
+          const fixture = slice.FixtureInstance[0].Fixture[0];
+          if (fixture.Params) {
+            fixture.Params.forEach(params => {
+              if (params.ParamFixturePixels) {
+                params.ParamFixturePixels.forEach(pixelParams => {
+                  if (pixelParams.ParamRange) {
+                    pixelParams.ParamRange.forEach(param => {
+                      if (param.$ && param.$.name === 'Width' && param.$.value) {
+                        width = parseInt(param.$.value);
+                      } else if (param.$ && param.$.name === 'Height' && param.$.value) {
+                        height = parseInt(param.$.value);
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+        }
+        
+        // Add to fixture details if not 1x1
+        if (width > 1 || height > 1) {
+          fixtureDetails.push(`${width}x${height}`);
+        }
+      });
+    }
+    
+    const fixtureCount = screen.layers && screen.layers[0].DmxSlice ? screen.layers[0].DmxSlice.length : 0;
     const currentStartChannel = getFirstPixelStartChannel(screen);
     
     console.log(`${index + 1}. ${screen.$.name}`);
-    console.log(`   Pixels: ${pixelCount} (${totalChannels} channels total)`);
+    console.log(`   Fixtures: ${fixtureCount} (${totalChannels} channels total)`);
+    if (fixtureDetails.length > 0) {
+      const uniqueSizes = [...new Set(fixtureDetails)];
+      console.log(`   Fixture sizes: ${uniqueSizes.join(', ')}`);
+    }
     console.log(`   Current starting channel: ${currentStartChannel}`);
     
     let validInput = false;

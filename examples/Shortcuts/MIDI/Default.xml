@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MidiShortcutPreset name="Default" presetId="439087487">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="22" microVersion="9" revision="47596"/>
+	<ShortcutManager name="MIDIShortcutManagerShortcuts">
+		<Shortcut name="Shortcut" uniqueId="1638027809465" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/master" translationType="1" allowedTranslationTypes="1"/>
+			<ShortcutPath name="OutputPath" path="/composition/master" translationType="1" allowedTranslationTypes="1"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336595632" value="1" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1635001298546" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/video/effects/kaleidoscope/opacity" translationType="1" allowedTranslationTypes="1"/>
+			<ShortcutPath name="OutputPath" path="/composition/video/effects/kaleidoscope/opacity" translationType="1" allowedTranslationTypes="1"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336594864" value="1" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1638027809506" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/layers/2/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<ShortcutPath name="OutputPath" path="/composition/layers/2/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336604592" value="0.62204724409448819422" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1638027809504" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/layers/1/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="11"/>
+			<ShortcutPath name="OutputPath" path="/composition/layers/1/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="11"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336594352" value="0" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1638027809508" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/layers/1/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<ShortcutPath name="OutputPath" path="/composition/layers/1/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336604848" value="0" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1635001298558" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/video/effects/kaleidoscope/effect/inputrotation" translationType="1" allowedTranslationTypes="1"/>
+			<ShortcutPath name="OutputPath" path="/composition/video/effects/kaleidoscope/effect/inputrotation" translationType="1" allowedTranslationTypes="1"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336603824" value="0.15748031496062991907" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1635001298539" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/layers/3/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<ShortcutPath name="OutputPath" path="/composition/layers/3/video/opacity" translationType="1" allowedTranslationTypes="11"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336596912" value="0.18897637795275590289" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1638027809500" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/layers/2/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="11"/>
+			<ShortcutPath name="OutputPath" path="/composition/layers/2/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="11"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336594608" value="0.43307086614173229133" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1635001298548" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/video/effects/kaleidoscope/effect/zoom" translationType="1" allowedTranslationTypes="1"/>
+			<ShortcutPath name="OutputPath" path="/composition/video/effects/kaleidoscope/effect/zoom" translationType="1" allowedTranslationTypes="1"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336604080" value="1" numSteps="128"/>
+		</Shortcut>
+		<Shortcut name="Shortcut" uniqueId="1635001298545" paramNodeName="ParamRange" behaviour="8" inputDeviceName="nanoKONTROL2 SLIDER/KNOB">
+			<ShortcutPath name="InputPath" path="/composition/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="1"/>
+			<ShortcutPath name="OutputPath" path="/composition/video/effects/huerotate/effect/huerotate" translationType="1" allowedTranslationTypes="1"/>
+			<Subtarget type="5" optionIndex="-1"/>
+			<RawInputMessage key="201744166336594352" value="0" numSteps="128"/>
+		</Shortcut>
+	</ShortcutManager>
+</MidiShortcutPreset>
+

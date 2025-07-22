@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Preset name="ProRes 422 Normal Quality" uniqueId="CONVERSION" className="Conversion" default="0">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="16" microVersion="0" revision="23883"/>
+	<Conversion name="Conversion" Name="ProRes 422 Normal Quality" Codec="ProRes" Format="422 Normal Quality" AutoSize="Fit" CustomSize="0" AudioEnabled="1" SampleRate="44100" BitDepth="16">
+		<OutputPath Type="2" Path="/Users/bart/Documents/Resolume Arena/Recorded"/>
+	</Conversion>
+</Preset>
+

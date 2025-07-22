@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ExtensionListInspector name="ExtensionListInspector">
+	<versionInfo name="Resolume Arena" majorVersion="7" minorVersion="22" microVersion="9" revision="47596"/>
+	<Lists>
+		<List type="Source">
+			<Items/>
+		</List>
+		<List type="Effect">
+			<Items/>
+		</List>
+	</Lists>
+</ExtensionListInspector>
+

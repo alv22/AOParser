@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Preset name="Inferno" uniqueId="PARAM_SPACE_COLOR_PALETTE" className="ColorPalette"
+        default="0">
+  <versionInfo name="Resolume Arena" majorVersion="7" minorVersion="3" microVersion="0"
+               revision="70000"/>
+  <ColorPalette name="ColorPalette">
+    <Params name="Params">
+      <ParamChoice name="Colors" T="COLOR" default="4278190335" value="4278190080"
+                   storeChoices="1">
+        <Choice name="Black 2" value="4278190080" enabled="1" active="1" shortName=""/>
+        <Choice name="0xa636ff 2" value="4281730570" enabled="1" active="1" shortName=""/>
+        <Choice name="0x2a857ff 2" value="4283893802" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x4aa6bff 2" value="4285205066" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x681174ff 2" value="4285796712" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x841a77ff 2" value="4285995652" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0x9e2772ff 2" value="4285671326" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xb63665ff 2" value="4284823222" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xcc4652ff 2" value="4283582156" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xe05a39ff 2" value="4281948896" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xef7120ff 2" value="4280316399" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xf88deff 2" value="4279143928" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xfcacfff 2" value="4279217404" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xf8cd2cff 2" value="4281126392" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xf5eb63ff 2" value="4284738549" enabled="1" active="1"
+                shortName=""/>
+        <Choice name="0xfbffb0ff 2" value="4289789947" enabled="1" active="1"
+                shortName=""/>
+      </ParamChoice>
+    </Params>
+  </ColorPalette>
+</Preset>
