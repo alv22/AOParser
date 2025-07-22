@@ -15,8 +15,8 @@ The goal of this phase is to establish a solid foundation for the project.
 
 2.  **Create the Tauri Project:**
     *   Use the official `create-tauri-app` scaffolding tool.
-    *   **Recommendation:** Start with the **Svelte** or **Vanilla JS** template. They are lightweight and excellent for this type of UI-focused application.
-    *   Project Name: `AOParserGUI` (or similar).
+    *   Use React / TypeScript / Tailwind for the frontend.
+    *   Project Name: `AOParser`
 
 3.  **Initial Verification:**
     *   Run `npm install` (or equivalent) to install frontend dependencies.
